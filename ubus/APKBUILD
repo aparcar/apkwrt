@@ -1,0 +1,35 @@
+pkgname=ubus
+pkgver=1
+pkgrel=1
+pkgdesc='OpenWrt ubus library - system bus'
+url='https://git.openwrt.org/project/ubus.git'
+arch="all"
+license="LGPL 2.1"
+depends="libubox lua json-c-dev"
+makedepends="json-c-dev"
+commit="f787c97b34894a38b15599886cacbca01271684f"
+source="https://github.com/openwrt/ubus/archive/${commit}.zip"
+
+
+build() {
+	cd "${pkgname}-${commit}"
+
+	cmake CMakeLists.txt \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLUAPATH=/usr/lib/lua \
+
+	make
+}
+
+package() {
+	cd "src/${pkgname}-${commit}"
+
+	make DESTDIR="$pkgdir" install
+
+	install -d ${pkgdir}/usr/bin
+	mv ${pkgdir}/usr/sbin/* ${pkgdir}/usr/bin/
+	rm -Rf ${pkgdir}/usr/sbin/
+}
+sha512sums="
+9a3e461c2121ba7fcb8b3c38d30210425fd6d4bd43de7cd251d44e3118b47cc4546d818d36f2348fb771ce1e9472a544ea1c286bc4a24cb687a984408646162c  f787c97b34894a38b15599886cacbca01271684f.zip
+"

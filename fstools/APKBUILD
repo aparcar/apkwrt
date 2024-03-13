@@ -1,0 +1,35 @@
+pkgname=fstools
+pkgver=1
+pkgrel=1
+pkgdesc='OpenWrt fstools library - system bus'
+url='https://git.openwrt.org/project/fstools.git'
+arch="all"
+license="GPL 2.0"
+depends="util-linux"
+makedepends="util-linux-dev"
+commit="bfe882d5ff4eeebb8f57c8a0f9b9e767a57870d8"
+source="
+https://github.com/openwrt/fstools/archive/${commit}.zip
+4096.patch
+"
+
+builddir="$srcdir/${pkgname}-${commit}"
+
+build() {
+	cmake CMakeLists.txt \
+		-DCMAKE_INSTALL_PREFIX=/usr
+
+	make
+}
+
+package() {
+	make DESTDIR="$pkgdir" install
+
+	install -d ${pkgdir}/usr/bin
+	mv ${pkgdir}/usr/sbin/* ${pkgdir}/usr/bin/
+	rm -Rf ${pkgdir}/usr/sbin/
+}
+sha512sums="
+b98f9e1f27aaedc79a93e25bf9e99b2bb6d9326f53872f8a3d2d03322064ee5ca46d9d0f20542a53c40ab0a3b101a73a8264034e2a9dd97cd873270629b6650b  bfe882d5ff4eeebb8f57c8a0f9b9e767a57870d8.zip
+13cc029ecc4767ed0d7179ab4242ecf0c8c202628b3046dce0124764d6b1251542596146c7e9c06a0b7d5fcc991c38467f2eba25eed8646de0397d8dc91e29d9  4096.patch
+"

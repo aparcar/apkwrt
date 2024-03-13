@@ -1,0 +1,29 @@
+pkgname=base-files
+pkgver=1
+pkgrel=1
+pkgdesc="Migrated packager"
+arch="aarch64"
+url="https://git.openwrt.org"
+license="BSD-4-Clause"
+depends=""
+depends_dev=""
+makedepends="$depends_dev"
+install=""
+
+file=base-files_1542-r24112-67e465b32e_aarch64_generic.ipk
+
+source="https://downloads.openwrt.org/snapshots/targets/armsr/armv8/packages/$file"
+builddir="$srcdir/$pkgname-$pkgver"
+build() {
+	tar xf "$file"
+}
+
+package() {
+	cd src/
+	mkdir -p "$pkgdir"
+	tar xf data.tar.gz --directory="$pkgdir"
+	rm "$pkgdir/lib64" "$pkgdir/usr/lib64"
+}
+sha512sums="
+e0060a605935628db117c0256bfcab90a1ff22fe5141ab61b97758a6029dffc876d125336cfdd3af4e339847bf23ca3fa7ffdc61a14dde4e3411ff636a62e2be  base-files_1542-r24112-67e465b32e_aarch64_generic.ipk
+"

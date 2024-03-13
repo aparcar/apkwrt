@@ -1,0 +1,33 @@
+pkgname=libubox
+pkgver=20239523
+pkgrel=1
+pkgdesc="C utility functions for OpenWrt"
+arch="all"
+url="https://openwrt.org/docs/techref/libubox"
+license='ISC'
+makedepends="git cmake lua5.1-dev json-c-dev"
+#options="staticlibs"
+source="https://github.com/openwrt/libubox/archive/refs/heads/master.zip"
+
+
+build() {
+  cd libubox-master
+  cmake \
+    -B "_build" \
+    -DBUILD_EXAMPLES=OFF \
+    -DCMAKE_INSTALL_PREFIX="/usr" \
+    -DLUAPATH=/usr/lib/lua \
+    ./
+#    -DCMAKE_BUILD_TYPE=Release \
+#    -DCMAKE_INSTALL_LIBDIR="lib" \
+  make -C "_build"
+}
+
+package() {
+  cd "src/libubox-master"
+
+  make -C "_build" DESTDIR="$pkgdir" install
+}
+sha512sums="
+3a0bd514e7e999b2d8dee42e6037b0d781c09ec799003cbef813bd1823589fdad37f69b3a16da63211bba044403b953f2e45e0cb89cbd0bdb35dad0920e9fc61  master.zip
+"
