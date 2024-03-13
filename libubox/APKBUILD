@@ -29,5 +29,5 @@ package() {
   make -C "_build" DESTDIR="$pkgdir" install
 }
 sha512sums="
-3a0bd514e7e999b2d8dee42e6037b0d781c09ec799003cbef813bd1823589fdad37f69b3a16da63211bba044403b953f2e45e0cb89cbd0bdb35dad0920e9fc61  master.zip
+364d6c8db71b79ca08533cb53d824ab7d4c283c73aa29a4786736b1c43542779c2963545d3bdbbe5b709e2ed156837ea9de499a677292ee0c58164ce300da715  master.zip
 "

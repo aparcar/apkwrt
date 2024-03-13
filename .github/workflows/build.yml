@@ -18,3 +18,5 @@ jobs:
           author: Paul Spooren <mail@aparcar.org>
           rsa_public_key: ${{ secrets.RSA_PUBLIC_KEY }}
           rsa_private_key: ${{ secrets.RSA_PRIVATE_KEY }}
+          generate_index_pages: false
+          generate_single_index_page: false
