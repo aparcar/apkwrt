@@ -5,8 +5,8 @@ pkgdesc='OpenWrt uci library - system bus'
 url='https://git.openwrt.org/project/uci.git'
 arch="all"
 license="LGPL 2.1"
-depends="lua"
-makedepends="cmake"
+depends="lua libubox"
+makedepends="cmake libubox lua5.1-dev"
 commit="5781664d5087ccc4b5ab58505883231212dbedbc"
 source="https://github.com/openwrt/uci/archive/${commit}.zip"
 
