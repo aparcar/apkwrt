@@ -1,0 +1,55 @@
+pkgname=ubox
+pkgver=1
+pkgrel=1
+pkgdesc='OpenWrt ubox library - system bus'
+url='https://git.openwrt.org/project/ubox.git'
+arch="all"
+license="LGPL 2.1"
+depends="libubox lua json-c-dev"
+makedepends="json-c-dev cmake"
+commit="4c7b720b9c63b826fb9404e454ae54f2ef5649d5"
+source="https://github.com/openwrt/ubox/archive/${commit}.zip"
+subpackages="logd logread getrandom"
+
+
+build() {
+	cd "${pkgname}-${commit}"
+
+	cmake CMakeLists.txt \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLUAPATH=/usr/lib/lua \
+
+	make
+}
+
+logd() {
+	cd "src/${pkgname}-${commit}"
+	install -d ${subpkgdir}/usr/bin
+	mv ${pkgdir}/usr/sbin/logd ${subpkgdir}/usr/bin/
+
+}
+
+logread() {
+	cd "src/${pkgname}-${commit}"
+	install -d ${subpkgdir}/usr/bin
+	mv ${pkgdir}/usr/sbin/logread ${subpkgdir}/usr/bin/
+}
+
+getrandom() {
+	cd "src/${pkgname}-${commit}"
+	install -d ${subpkgdir}/usr/bin
+	mv ${pkgdir}/usr/bin/getrandom ${subpkgdir}/usr/bin/
+}
+
+package() {
+	cd "src/${pkgname}-${commit}"
+
+	make DESTDIR="$pkgdir" install
+
+	install -d ${pkgdir}/usr/bin
+	mv ${pkgdir}/usr/sbin/kmodloader ${pkgdir}/usr/bin/
+	mv ${pkgdir}/usr/sbin/validate_data ${pkgdir}/usr/bin/
+}
+sha512sums="
+e6ec0c8538bbbfe258897ff0ff069a25f11cfb4471a0fde9f21cd6b4e581368a89139e28a181761b0c4fcba29289a39a54bb1e5bc2c5f06c15db7db9c0db4f8f  4c7b720b9c63b826fb9404e454ae54f2ef5649d5.zip
+"

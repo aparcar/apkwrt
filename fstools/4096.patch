@@ -1,0 +1,22 @@
+--- /libfstools/snapshot.h.o
++++ /libfstools/snapshot.h
+@@ -14,7 +14,7 @@
+ #ifndef _SNAPSHOT_H__
+ #define _SNAPSHOT_H__
+ 
+-#define PATH_MAX	256
++#define PATH_MAX	4096
+ #define OWRT		0x4f575254
+ #define DATA		0x44415441
+ #define CONF		0x434f4e46
+--- /libfstools/mtd.c
++++ /libfstools/mtd.c.o
+@@ -25,7 +25,7 @@
+ 
+ #include "volume.h"
+ 
+-#define PATH_MAX		256
++#define PATH_MAX		4096
+ 
+ struct mtd_volume {
+ 	struct volume v;

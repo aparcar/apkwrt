@@ -1,0 +1,35 @@
+pkgname=uci
+pkgver=1
+pkgrel=1
+pkgdesc='OpenWrt uci library - system bus'
+url='https://git.openwrt.org/project/uci.git'
+arch="all"
+license="LGPL 2.1"
+depends="lua"
+makedepends="cmake"
+commit="5781664d5087ccc4b5ab58505883231212dbedbc"
+source="https://github.com/openwrt/uci/archive/${commit}.zip"
+
+
+build() {
+	cd "${pkgname}-${commit}"
+
+	cmake CMakeLists.txt \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLUAPATH=/usr/lib/lua \
+
+	make
+}
+
+package() {
+	cd "src/${pkgname}-${commit}"
+
+	make DESTDIR="$pkgdir" install
+
+	install -d ${pkgdir}/usr/bin
+	mv ${pkgdir}/usr/bin/* ${pkgdir}/usr/bin/
+	rm -Rf ${pkgdir}/usr/sbin/
+}
+sha512sums="
+2518abd850ca59437727c44608269239321adc9bbbc33e196e855fbe7f3f6943c667ecd3d1f30b41bf16f43be4dba2f34e50d8c9923448471a393598fb3c26bf  5781664d5087ccc4b5ab58505883231212dbedbc.zip
+"

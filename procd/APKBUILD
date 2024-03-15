@@ -1,0 +1,40 @@
+pkgname=procd
+pkgver=1
+pkgrel=1
+pkgdesc='OpenWrt procd library - system bus'
+url='https://git.openwrt.org/project/procd.git'
+arch="all"
+license="LGPL 2.1"
+depends="libubox lua json-c-dev"
+makedepends="json-c-dev cmake ubus"
+commit="2db836553e8fc318143b38dbc6e12b8625cf5c33"
+source="
+https://github.com/openwrt/procd/archive/${commit}.zip
+null.patch
+"
+
+builddir="$srcdir/${pkgname}-${commit}"
+
+build() {
+	#cd "${pkgname}-${commit}"
+
+	cmake CMakeLists.txt \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLUAPATH=/usr/lib/lua \
+
+	make
+}
+
+package() {
+#	cd "src/${pkgname}-${commit}"
+
+	make DESTDIR="$pkgdir" install
+
+	install -d ${pkgdir}/usr/bin
+	mv ${pkgdir}/usr/sbin/* ${pkgdir}/usr/bin/
+	rm -Rf ${pkgdir}/usr/sbin/
+}
+sha512sums="
+c1a43261bfd71db7e325ff0c6678dbc064bb3fa771295291cc8fb44b274138d5b8835ba64773b6ffaf3b704b22b6da203989d5be2fe88dd12ca716db5bc90495  2db836553e8fc318143b38dbc6e12b8625cf5c33.zip
+efec3b4bb40b330d380c55eb051da07e2ccdf4a7ba4f03f426fee8b5a1acb5fd85a40f28bc9dadbb697190d5d0efde382a92496f212cf0bf874c725db4707e9e  null.patch
+"
