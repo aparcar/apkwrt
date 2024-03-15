@@ -5,8 +5,8 @@ pkgdesc='OpenWrt fstools library - system bus'
 url='https://git.openwrt.org/project/fstools.git'
 arch="all"
 license="GPL 2.0"
-depends="util-linux"
-makedepends="util-linux-dev cmake"
+depends="util-linux libubox"
+makedepends="util-linux-dev cmake libubox"
 commit="bfe882d5ff4eeebb8f57c8a0f9b9e767a57870d8"
 source="
 https://github.com/openwrt/fstools/archive/${commit}.zip
